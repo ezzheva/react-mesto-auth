@@ -3,30 +3,21 @@ import { useNavigate } from "react-router-dom";
 import * as Auth from "../utils/Auth";
 import { useForm } from "../hook/useForm";
 
-function Login({ handleLogin }) {
+function Login({ handleLogin, setUserEmail }) {
   const { values, handleChange, setValues } = useForm({
     email: "",
     password: "",
   });
-  // const [loginValue, setLoginValue] = useState({
-  //   email: "",
-  //   password: "",
-  // });
+  
   const navigate = useNavigate();
 
-  // function handleChange(evt) {
-  //   const { name, value } = evt.target;
-  //   setLoginValue({
-  //     ...loginValue,
-  //     [name]: value,
-  //   });
-  // }
 
   function handleSubmit(evt) {
     evt.preventDefault();
     Auth.authorize(values.email, values.password)
       .then((data) => {
         localStorage.setItem("token", data.token);
+        setUserEmail(values.email)
         handleLogin();
         navigate("/");
       })

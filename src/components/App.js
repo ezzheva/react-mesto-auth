@@ -71,7 +71,7 @@ function App() {
 
   useEffect(() => {
     handleTokenCheck();
-  }, [loggedIn]);
+  }, []);
 
   /**попап редактирование профиля */
   function handleEditProfileClick() {
@@ -191,15 +191,17 @@ function App() {
   }
 
   useEffect(() => {
-    Promise.all([api.getUserInfo(), api.getInitialCards()])
-      .then(([data, cardData]) => {
-        setCurrentUser(data);
-        setCards(cardData);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+    if (loggedIn) {
+      Promise.all([api.getUserInfo(), api.getInitialCards()])
+        .then(([data, cardData]) => {
+          setCurrentUser(data);
+          setCards(cardData);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [loggedIn]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -225,18 +227,19 @@ function App() {
             <Route
               path="/sign-in"
               element={
-                <Login
-                  handleLogin={handleLogin}
-                  setIsSuccess={setIsSuccess}
-                  setIsInfoTooltipPopupOpen={setIsInfoTooltipPopupOpen}
-                />
+                <Login handleLogin={handleLogin} setUserEmail={setUserEmail} />
               }
             />
+            <Route path="*" element={<Navigate to="/sign-in" replace />} />
 
             <Route
               path="/react-mesto-auth"
               element={
-                loggedIn ? <Navigate to="/" /> : <Navigate to="/sign-in" />
+                loggedIn ? (
+                  <Navigate to="/" replace />
+                ) : (
+                  <Navigate to="/sign-in" replace />
+                )
               }
             />
 
@@ -295,6 +298,8 @@ function App() {
             onClose={closeAllPopups}
             isOpen={isInfoTooltipPopupOpen}
             isSuccess={isSuccess}
+            messageSuccess={"Вы успешно зарегистрировались!"}
+            messageFatal={"Что-то пошло не так! Попробуйте ещё раз."}
           />
         </div>
       </div>

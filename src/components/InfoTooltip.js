@@ -3,7 +3,7 @@ import imageSuccess from "../images/regOk.svg";
 import imageFatal from "../images/regNo.svg";
 import { usePopupClose } from "../hook/usePopupClose";
 
-function InfoTooltip({ isOpen, onClose, isSuccess }) {
+function InfoTooltip({ isOpen, onClose, isSuccess, messageSuccess, messageFatal }) {
   usePopupClose(isOpen, onClose);
 
   return (
@@ -16,8 +16,8 @@ function InfoTooltip({ isOpen, onClose, isSuccess }) {
         />
         <p className="popup__title popup__title_auth">
           {isSuccess
-            ? "Вы успешно зарегистрировались!"
-            : "Что-то пошло не так! Попробуйте ещё раз."}
+            ? messageSuccess
+            : messageFatal}
         </p>
         <button
           type="button"

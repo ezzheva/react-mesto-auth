@@ -15,4 +15,4 @@
 
 ## _Ссылки_
 
-**[Ссылка на проект](https://ezzheva.github.io/mesto-react/index.html)**
+**[Ссылка на проект](https://ezzheva.github.io/react-mesto-auth/index.html)**
