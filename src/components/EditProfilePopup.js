@@ -17,6 +17,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
   // function handleChangeAbout(evt) {
   //   setAbout(evt.target.value);
   // }
+  
   function handleSubmit(evt) {
     evt.preventDefault();
     onUpdateUser({
